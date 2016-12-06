@@ -13,16 +13,20 @@ import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
 import org.iae.annecy.st1.etape1.controller.catalogue.CatalogueController;
-//import org.iae.annecy.st1.common.mvc.DataView;
-//import org.iae.annecy.st1.common.mvc.StringView;
-//import org.iae.annecy.st1.etape1.controller.MainController;
-//import org.iae.annecy.st1.etape1.model.UserModel;
 import org.iae.annecy.st1.etape1.model.catalogue.Catalogue;
 import org.iae.annecy.st1.etape1.model.produit.Produit;
-//import org.iae.annecy.st1.etape1.view.UserTextFrenchView;
 import org.iae.annecy.st1.etape1.view.Menu.MenuView;
-//import org.iae.annecy.st1.etape1.view.catalogue.CatalogueView;
-//import org.iae.annecy.st1.tools.ConsoleHelper;
+import org.iae.annecy.st1.common.mvc.DataView;
+import org.iae.annecy.st1.common.mvc.StringView;
+import org.iae.annecy.st1.etape1.controller.MainController;
+import org.iae.annecy.st1.etape1.model.UserModel;
+import org.iae.annecy.st1.etape1.model.person.PersonAddModel;
+import org.iae.annecy.st1.etape1.model.person.PersonGetModel;
+import org.iae.annecy.st1.etape1.view.UserTextFrenchView;
+import org.iae.annecy.st1.etape1.view.person.PersonAddFrenchView;
+import org.iae.annecy.st1.etape1.view.person.PersonCreateFrenchView;
+import org.iae.annecy.st1.etape1.view.person.PersonGetFrenchView;
+import org.iae.annecy.st1.tools.ConsoleHelper;
 
 /**
  * Classe permetant de tester le MVC.
@@ -31,6 +35,14 @@ import org.iae.annecy.st1.etape1.view.Menu.MenuView;
  */
 public class Main {
 
+	/**
+	 * COntroller pemetant le traitement des actions d'exemple.
+	 */
+	private static MainController mainController;
+
+	static {
+		Main.mainController = new MainController();
+	}
 	/**
 	 * Lance l'application.
 	 * 
