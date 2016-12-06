@@ -32,57 +32,44 @@ import org.iae.annecy.st1.etape1.view.Menu.MenuView;
 public class Main {
 
 	/**
-	 * COntroller pemetant le traitement des actions d'exemple.
-	 */
-	/*private static MainController mainController;
-
-	static {
-		Main.mainController = new MainController();
-	}*/
-
-	/**
 	 * Lance l'application.
 	 * 
 	 * @param args
 	 *            command line parameters
 	 */
 	public static void main(final String[] args) {
-		/*initUserModel();
-
-		final DataView userData = mainController.get("user:display");
-		final StringView userView = new UserTextFrenchView();
-
-		ConsoleHelper.display(userView.build(userData));*/
 		
-		Produit p1= new Produit("ref1","description1",15,"prod1");
-		Produit p2= new Produit("ref2","description2",30,"prod2");
+		Produit produit1= new Produit("ref1","description1",15,"prod1");
+		Produit produit2= new Produit("ref2","description2",30,"prod2");
 		
-		Catalogue c = new Catalogue();
+		Catalogue catalogue = new Catalogue();
+		
+		CatalogueController catalogueController =new CatalogueController(catalogue);
 		
 		try {
 	         FileInputStream fileIn = new FileInputStream("catalogue.ser");
 	         ObjectInputStream in = new ObjectInputStream(fileIn);
-	         c = (Catalogue) in.readObject();
+	         catalogue = (Catalogue) in.readObject();
 	         in.close();
 	         fileIn.close();
 		}catch(FileNotFoundException f){
 			System.out.print("votre catalogue est vide pensez a le remplir !! \n");
-			c.ajouterproduit(p1);
-	 		c.ajouterproduit(p2);
+			catalogue.ajouterproduit(produit1);
+			catalogue.ajouterproduit(produit2);
 	      }catch(IOException i) {
 	    	System.out.println("un erreur est survenu lors de la lecture du le fichier : "+i);
-	        c.ajouterproduit(p1);
-	 		c.ajouterproduit(p2);
+	    	catalogue.ajouterproduit(produit1);
+	    	catalogue.ajouterproduit(produit2);
 	 		 return;
 	      }catch(ClassNotFoundException e) {
 	         System.out.println("la classe Catalogue n\'existe pas !!");
 	         e.printStackTrace();
-		     c.ajouterproduit(p1);
-		     c.ajouterproduit(p2);
+	         catalogue.ajouterproduit(produit1);
+	         catalogue.ajouterproduit(produit1);
 	         return;
 	      }
 		
-		CatalogueController cc =new CatalogueController(c);
+		
 		
 		MenuView menu = new MenuView();
 		
@@ -95,25 +82,25 @@ public class Main {
 		while(choixg > 6){
 			
 			if(choixg == 1){
-				System.out.println(cc.get());
+				System.out.println(catalogueController.get());
 				choixg =menu.menugeneral();
 			}else if(choixg == 2){
-				System.out.println(cc.get());
+				System.out.println(catalogueController.get());
 				choixp = menu.menuproduit();
-				choixa = menu.menuattribut(c.getProduits().get(choixp-1));
+				choixa = menu.menuattribut(catalogue.getProduits().get(choixp-1));
 			
 				if(choixa == 1){
 					System.out.println("entrer le nouveau nom :");
 					String n=s.next();
-					c.getProduits().get(choixp-1).setNom(n);
+					catalogue.getProduits().get(choixp-1).setNom(n);
 				}else if(choixa == 2){
 						System.out.println("entrer la nouvelle description :");
 						String d=s.nextLine();
-						c.getProduits().get(choixp-1).setDescription(d);
+						catalogue.getProduits().get(choixp-1).setDescription(d);
 				}else if(choixa == 3){
 					System.out.println("entrer le nouveau prix :");
 					int prix =s.nextInt();
-						c.getProduits().get(choixp-1).setPrix(prix);
+						catalogue.getProduits().get(choixp-1).setPrix(prix);
 				}
 				choixg =menu.menugeneral();
 				
@@ -125,7 +112,7 @@ public class Main {
 				}else{
 					r="";
 				}
-				Produit p = c.recherch(r);
+				Produit p = catalogue.recherch(r);
 				if(p!=null){
 					System.out.println("produit trouver \n la réference du produit est :"+p.getRef()+
 							" \n le prix du produit : "+p.getPrix()+
@@ -138,7 +125,7 @@ public class Main {
 				System.out.println("entrer la nouvelle reference :");
 				String r=s.next();
 				
-				if(c.recherch(r) == null){
+				if(catalogue.recherch(r) == null){
 					System.out.println("entrer le nouveau prix :");
 					int p =s.nextInt();
 					if(p>=0){
@@ -149,7 +136,7 @@ public class Main {
 						
 						String d=s.next();
 						
-						c.ajouterproduit(new Produit(r,d,p,n));
+						catalogue.ajouterproduit(new Produit(r,d,p,n));
 					}else{
 						System.out.println("vous ne pouvez pas ajouter un prix negatif !!! :");
 					}
@@ -161,19 +148,21 @@ public class Main {
 			}else if(choixg == 5){
 				System.out.println("Entre la reference du produit que vous-voulez supprimer : ");
 				String ref=s.next();
-				Produit p = c.recherch(ref);
+				Produit p = catalogue.recherch(ref);
 				if(p!=null){
-					c.getProduits().remove(p);
+					catalogue.getProduits().remove(p);
 				}else{
 					System.out.println("le produit n\'existe pas");
 				}
 				choixg =menu.menugeneral();
+				
 			}
 		}
+		
 		try {
 	         FileOutputStream fileOut = new FileOutputStream("catalogue.ser");
 	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
-	         out.writeObject(c);
+	         out.writeObject(catalogue);
 	         out.close();
 	         fileOut.close();
 	         System.out.printf("Catalgue sauvrgarder in catalogue.se");
