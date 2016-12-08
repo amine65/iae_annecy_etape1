@@ -5,6 +5,7 @@ import org.iae.annecy.st1.tools.ConsoleHelper;
 import org.iae.annecy.st1.etape1.controller.ClientController;
 import org.iae.annecy.st1.etape1.controller.catalogue.CatalogueController;
 import org.iae.annecy.st1.etape1.model.client.Client;
+import org.iae.annecy.st1.etape1.model.commande.Commande;
 import org.iae.annecy.st1.etape1.model.panier.Panier;
 import org.iae.annecy.st1.etape1.model.produit.Produit;
 
@@ -46,6 +47,15 @@ public class MenuView {
 		return choix;
 	}
 	
+	public int menuvendeur(){
+		int choix;
+		this.saisie.reset();
+		ConsoleHelper.display("######### Menu Vendeur #########");
+		ConsoleHelper.display("1-indiquer qu'un client a acheté un produit  \t 2-visualiser les produits achetés par un client \t 3-Quitter");
+		choix=this.saisie.nextInt();;
+		return choix;
+	}
+	
 	public int menuclientgeneral(){
 		int choix;
 		this.saisie.reset();
@@ -63,6 +73,20 @@ public class MenuView {
 		ConsoleHelper.display("1 : le nom du produit choisi est : "+p.getNom());
 		ConsoleHelper.display("2 : la description du produit choisi est : "+p.getDescription());
 		ConsoleHelper.display("3 : le prix du produit choisi est : "+p.getPrix());
+		
+		ConsoleHelper.display("le quelle voulez-vous medifier ?");
+		choix = this.saisie.nextInt();
+		return choix;
+	}
+	
+	public int menuattributclient(Client c){
+		int choix;
+		
+		//ConsoleHelper.display("1 : la reference du produit choisi est : "+p.getRef());
+		ConsoleHelper.display("1 : le numero du client choisi est : "+c.getNumero());
+		ConsoleHelper.display("2 : la nom du client choisi est : "+c.getNom());
+		ConsoleHelper.display("3 : le prenom du client choisi est : "+c.getPrenom());
+		ConsoleHelper.display("4 : le code promotionnel du client choisi est : "+c.getcodepromo());
 		
 		ConsoleHelper.display("le quelle voulez-vous medifier ?");
 		choix = this.saisie.nextInt();
@@ -169,16 +193,18 @@ public class MenuView {
 		
 	}
 
-	public void menuresponsableclientele(ClientController clientcontroller){
-		int choixgeneral,choixpromo;
+	public Commande menuresponsableclientele(ClientController clientcontroller){
+		int choixgeneral,choixpromo,choixattribut;
 		
 		String nom;
 		String prenom;
 		int numero;
-		String codepromo;
+		int codepromo;
+		
+		Commande commande = new Commande();
 		
 		
-			choixgeneral = this.menuclientgeneral();
+		choixgeneral = this.menuclientgeneral();
 		while(choixgeneral<5){
 			if(choixgeneral == 1){
 				ConsoleHelper.display(clientcontroller.get());
@@ -191,25 +217,28 @@ public class MenuView {
 				
 				Client clienttrouver = clientcontroller.recherch(numero);
 				if(clienttrouver!=null){
-					ConsoleHelper.display("entrer le nouveau numero du client :");
-					numero =this.saisie.nextInt();
-					clienttrouver.setNumero(numero);
-					
-					ConsoleHelper.display("entrer le nouveau nom du client :");
-					nom =this.saisie.next();
-					clienttrouver.setNom(nom);
-					
-					ConsoleHelper.display("entrer le nouveau prenom du client :");
-					prenom =this.saisie.next();
-					clienttrouver.setPrenom(prenom);
-					
-					ConsoleHelper.display("voulez-vous modifier le code promotionnel ? 1:oui 2:non");
-					choixpromo =this.saisie.nextInt();
-					if(choixpromo == 1){
-						ConsoleHelper.display("entrer le nouveau code promotionnel du client :");
-						codepromo =this.saisie.next();
-						clienttrouver.setcodepromo(codepromo);
-					}
+					choixattribut=menuattributclient(clienttrouver);
+					if(choixattribut==1){
+						ConsoleHelper.display("entrer le nouveau numero du client :");
+						numero =this.saisie.nextInt();
+						clienttrouver.setNumero(numero);
+					}else if(choixattribut==2){
+						ConsoleHelper.display("entrer le nouveau nom du client :");
+						nom =this.saisie.next();
+						clienttrouver.setNom(nom);
+					}else if(choixattribut==3){
+						ConsoleHelper.display("entrer le nouveau prenom du client :");
+						prenom =this.saisie.next();
+						clienttrouver.setPrenom(prenom);
+					}else if(choixattribut==4){
+						ConsoleHelper.display("voulez-vous modifier le code promotionnel ? 1:oui 2:non");
+						choixpromo =this.saisie.nextInt();
+						if(choixpromo == 1){
+							ConsoleHelper.display("entrer le nouveau code promotionnel du client :");
+							codepromo =this.saisie.nextInt();
+							clienttrouver.setcodepromo(codepromo);
+						}
+					}	
 					//clientcontroller.ajouterClient(clientnouveau);
 					ConsoleHelper.display("Client modifier !!!");
 				}else{
@@ -250,7 +279,7 @@ public class MenuView {
 					choixpromo =this.saisie.nextInt();
 					if(choixpromo == 1){
 						ConsoleHelper.display("entrer le code promotionnel du client :");
-						codepromo =this.saisie.next();
+						codepromo =this.saisie.nextInt();
 						clientnouveau.setcodepromo(codepromo);
 					}
 					clientcontroller.ajouterClient(clientnouveau);
@@ -258,12 +287,15 @@ public class MenuView {
 					choixgeneral = this.menuclientgeneral();
 			}
 		}
+		commande.setClients(clientcontroller.getClient());
+		return commande;
 	}
 	
-	public void menuclient(CatalogueController cataloguecontroller,Panier monpanier,Client client){
+	public Client menuclient(CatalogueController cataloguecontroller,Panier monpanier,Client client){
 		int choixgeneral,confirmation;
 		String reference="";
 		Produit monproduit = new Produit();
+		Client clients=new Client();
 		monpanier.setClient(client);
 		choixgeneral = this.menuclientnative();
 		while(choixgeneral < 4){
@@ -281,6 +313,9 @@ public class MenuView {
 					confirmation=this.saisie.nextInt();
 					if(confirmation==1){
 						monpanier.ajouterProduit(monproduit);
+						
+						clients.ajouterproduit(monproduit);
+						
 						ConsoleHelper.display("produit ajouter avec succès");
 					}
 				}else{
@@ -300,6 +335,27 @@ public class MenuView {
 					ConsoleHelper.display("Votre panier à bien était valider !!");
 				}
 				choixgeneral = this.menuclientnative();
+			}
+		}
+		
+		
+		
+		return clients;
+		
+	}
+
+	public void menuvendeurmagasin(Commande commande) {
+		// TODO Auto-generated method stub
+		int choixgeneral;
+		choixgeneral = this.menuvendeur();
+		while(choixgeneral<3){
+			if(choixgeneral == 1){
+				choixgeneral = this.menuvendeur();
+			}else if(choixgeneral ==2){
+				ConsoleHelper.display("Entre votre numero client pour acceder à votre compte : ");
+				int numero = saisie.nextInt();
+				commande.afficherparclient();
+				choixgeneral = this.menuvendeur();
 			}
 		}
 		

@@ -15,6 +15,7 @@ import java.util.Scanner;
 import org.iae.annecy.st1.etape1.controller.catalogue.CatalogueController;
 import org.iae.annecy.st1.etape1.model.catalogue.Catalogue;
 import org.iae.annecy.st1.etape1.model.client.Client;
+import org.iae.annecy.st1.etape1.model.commande.Commande;
 import org.iae.annecy.st1.etape1.model.panier.Panier;
 import org.iae.annecy.st1.etape1.model.produit.Produit;
 import org.iae.annecy.st1.etape1.view.Menu.MenuView;
@@ -44,6 +45,10 @@ public class Main {
 		Catalogue catalogue = new Catalogue();
 		
 		Panier monpanier = new Panier();
+		
+		Client client = new Client();
+		
+		Commande commande=new Commande();
 		
 		Scanner saisie = new Scanner(System.in);
 		
@@ -85,28 +90,26 @@ public class Main {
 			choixmenu=menu.menugeneral();
 			break;
 		case 2:
-			menu.menuresponsableclientele(clientcatalogue);
+			commande=menu.menuresponsableclientele(clientcatalogue);
 			choixmenu=menu.menugeneral();
 			break;
 		case 3:
 			ConsoleHelper.display("Entre votre numero client pour acceder à votre compte : ");
 			int numero = saisie.nextInt();
 			
-			Client clienttrouver = clientcatalogue.recherch(numero);
-			if(clienttrouver!=null){
-				
+			client = commande.recherch(numero);
+			if(client!=null){
+				client=menu.menuclient(catalogueController, monpanier, client);
 			}else{
 				ConsoleHelper.display("le numero saisie ne correspond à aucun client !!");
 			}
-			
-			menu.menuclient(catalogueController, monpanier, clienttrouver);
 			
 			choixmenu=menu.menugeneral();
 			
 			break;
 		case 4:
-			ConsoleHelper.display("4");
-			//menu.menuvendeurmagasin();
+			commande.recherch(client.getNumero());
+			menu.menuvendeurmagasin(commande);
 			choixmenu=menu.menugeneral();
 			break;
 		}

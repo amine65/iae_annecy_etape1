@@ -15,6 +15,14 @@ public class ClientController {
 		
 	}
 	
+	public ArrayList<Client> getClient() {
+		return client;
+	}
+	public void setClient(ArrayList<Client> client) {
+		this.client = client;
+	}
+	
+	
 	public String get(){
 		String texte="";
 		for(Client monclient : this.client){
