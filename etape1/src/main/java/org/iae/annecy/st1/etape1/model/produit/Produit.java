@@ -9,6 +9,7 @@ public class Produit implements java.io.Serializable {
 	private static final long serialVersionUID = 4403018142099389267L;
 	private String ref;
 	private String description;
+	private String descriptionlong;
 	private int prix;
 	private String nom;
 	
@@ -16,11 +17,20 @@ public class Produit implements java.io.Serializable {
 		
 	}
 	
-	public Produit(String r,String d,int p,String nom){
+	public Produit(String r,String d,String dl,int p,String nom){
 		this.prix=p;
 		this.ref=r;
 		this.description=d;
+		this.descriptionlong=dl;
 		this.nom=nom;
+	}
+	
+	public String getDescriptionlong() {
+		return descriptionlong;
+	}
+
+	public void setDescriptionlong(String descriptionlong) {
+		this.descriptionlong = descriptionlong;
 	}
 	
 	public String getRef() {
@@ -54,7 +64,8 @@ public class Produit implements java.io.Serializable {
 		ConsoleHelper.display("la réference du produit est :"+this.getRef()+
 							" le nom du produit : "+this.getNom()+
 							" le prix du produit : "+this.getPrix()+
-							" la description du produit :"+this.getDescription());	
+							" la description du produit :"+this.getDescription()+
+							" la description long du produit :"+this.getDescriptionlong());
 	}
 	
 	

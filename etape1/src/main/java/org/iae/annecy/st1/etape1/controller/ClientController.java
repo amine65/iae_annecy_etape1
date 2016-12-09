@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 import org.iae.annecy.st1.etape1.model.client.Client;
 
-public class ClientController {
+public class ClientController implements java.io.Serializable {
 	private ArrayList<Client> client = new ArrayList<Client>();
 	
 	public ClientController(Client monclient){

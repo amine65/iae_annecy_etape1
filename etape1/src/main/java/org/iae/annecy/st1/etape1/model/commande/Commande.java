@@ -47,8 +47,10 @@ public class Commande {
 	
 	public void afficherparclient(){
 		for(Client client: this.getClients()){
-			ConsoleHelper.display("le client numero :"+client.getNumero()+" à acheter les produit suivants : ");
-			client.afficherproduits();
+			if(client.getProduit()!=null){
+				ConsoleHelper.display("le client numero : "+client.getNumero()+" à acheter les produit suivants : ");
+				client.afficherproduits();
+			}
 		}
 		
 	}

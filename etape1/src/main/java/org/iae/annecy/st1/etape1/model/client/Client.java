@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.iae.annecy.st1.etape1.model.produit.Produit;
 import org.iae.annecy.st1.tools.ConsoleHelper;
 
-public class Client {
+public class Client implements java.io.Serializable {
 	private String nom;
 	private String prenom;
 	private int numero;

@@ -1,5 +1,8 @@
 package org.iae.annecy.st1.etape1.view.Menu;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Scanner;
 import org.iae.annecy.st1.tools.ConsoleHelper;
 import org.iae.annecy.st1.etape1.controller.ClientController;
@@ -42,7 +45,7 @@ public class MenuView {
 		int choix;
 		this.saisie.reset();
 		ConsoleHelper.display("######### Menu Client #########");
-		ConsoleHelper.display("1-ajouter un produit à votre panier  \t 2-voir le prix de mon panier \t 3-valider votre commande \t 4-Quitter");
+		ConsoleHelper.display("1-ajouter un produit à votre panier  \t 2-voir le prix de mon panier \t 3-valider votre commande \n 4-voir votre panier \t 5-Quitter");
 		choix=this.saisie.nextInt();;
 		return choix;
 	}
@@ -73,6 +76,7 @@ public class MenuView {
 		ConsoleHelper.display("1 : le nom du produit choisi est : "+p.getNom());
 		ConsoleHelper.display("2 : la description du produit choisi est : "+p.getDescription());
 		ConsoleHelper.display("3 : le prix du produit choisi est : "+p.getPrix());
+		ConsoleHelper.display("4 : le description long du produit choisi est : "+p.getPrix());
 		
 		ConsoleHelper.display("le quelle voulez-vous medifier ?");
 		choix = this.saisie.nextInt();
@@ -114,6 +118,7 @@ public class MenuView {
 		String reference;
 		String nom;
 		String description;
+		String descriptionlong;
 		int prix;
 		Produit prodtrouver = new Produit();
 		
@@ -170,7 +175,11 @@ public class MenuView {
 						
 						description=this.saisie.next();
 						
-						cataloguecontroller.ajouterproduit(new Produit(reference,description,prix,nom));
+						ConsoleHelper.display("entrer la nouvelle description long :");
+						
+						descriptionlong=this.saisie.next();
+						
+						cataloguecontroller.ajouterproduit(new Produit(reference,description,descriptionlong,prix,nom));
 					}else{
 						ConsoleHelper.display("vous ne pouvez pas ajouter un prix negatif !!! :");
 					}
@@ -190,6 +199,17 @@ public class MenuView {
 				choixgeneral = this.menucataloguegeneral();
 			}
 		}
+		
+		try {
+	         FileOutputStream fileOut = new FileOutputStream("catalogue.ser");
+	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
+	         out.writeObject(cataloguecontroller.getMoncatatalogue());
+	         out.close();
+	         fileOut.close();
+	         ConsoleHelper.display("Catalgue sauvrgarder in catalogue.se");
+	      }catch(IOException i) {
+	         ConsoleHelper.display("un erreur est survenu lors de l\'écréture dans le fichier : "+i);
+	      }
 		
 	}
 
@@ -287,6 +307,18 @@ public class MenuView {
 					choixgeneral = this.menuclientgeneral();
 			}
 		}
+		
+		try {
+	         FileOutputStream fileOut = new FileOutputStream("client.ser");
+	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
+	         out.writeObject(clientcontroller);
+	         out.close();
+	         fileOut.close();
+	         ConsoleHelper.display("Clients sauvrgarder in client.se");
+	      }catch(IOException i) {
+	         ConsoleHelper.display("un erreur est survenu lors de l\'écréture dans le fichier : "+i);
+	      }
+		
 		commande.setClients(clientcontroller.getClient());
 		return commande;
 	}
@@ -298,7 +330,7 @@ public class MenuView {
 		Client clients=new Client();
 		monpanier.setClient(client);
 		choixgeneral = this.menuclientnative();
-		while(choixgeneral < 4){
+		while(choixgeneral < 5){
 			if(choixgeneral == 1){
 				ConsoleHelper.display("les produit existant dans le catalogue sont : ");
 				ConsoleHelper.display(cataloguecontroller.get());
@@ -326,19 +358,37 @@ public class MenuView {
 				monpanier.prixpanier();
 				choixgeneral = this.menuclientnative();
 			}else if(choixgeneral == 3){
-				ConsoleHelper.display("Votre panier contient les produit suivant :");
 				monpanier.listerpanier();
-				ConsoleHelper.display("voulez-vous valider votre panier ? 1:oui 2:non");
-				confirmation=this.saisie.nextInt();
-				if(confirmation==1){
-					monpanier.setValidercommande(true);
-					ConsoleHelper.display("Votre panier à bien était valider !!");
+				if(monpanier.getValidercommande() == false){
+					
+					ConsoleHelper.display("voulez-vous valider votre panier ? 1:oui 2:non");
+					confirmation=this.saisie.nextInt();
+					if(confirmation==1){
+						monpanier.setValidercommande(true);
+						ConsoleHelper.display("Votre panier à bien était valider !!");
+					}
+					
+				}else{
+					ConsoleHelper.display("Votre panier est déja valider !!");
 				}
+				
+				choixgeneral = this.menuclientnative();
+			}else if(choixgeneral == 4){
+				monpanier.listerpanier();
 				choixgeneral = this.menuclientnative();
 			}
 		}
 		
-		
+		try {
+	         FileOutputStream fileOut = new FileOutputStream("panier.ser");
+	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
+	         out.writeObject(monpanier);
+	         out.close();
+	         fileOut.close();
+	         ConsoleHelper.display("panier sauvrgarder in panier.se");
+	      }catch(IOException i) {
+	         ConsoleHelper.display("un erreur est survenu lors de l\'écréture dans le fichier : "+i);
+	      }
 		
 		return clients;
 		
@@ -350,10 +400,11 @@ public class MenuView {
 		choixgeneral = this.menuvendeur();
 		while(choixgeneral<3){
 			if(choixgeneral == 1){
+				/*ConsoleHelper.display("Entre votre numero client pour acceder à votre compte : ");
+				int numero = saisie.nextInt();*/
 				choixgeneral = this.menuvendeur();
-			}else if(choixgeneral ==2){
-				ConsoleHelper.display("Entre votre numero client pour acceder à votre compte : ");
-				int numero = saisie.nextInt();
+			}else if(choixgeneral == 2){
+				
 				commande.afficherparclient();
 				choixgeneral = this.menuvendeur();
 			}

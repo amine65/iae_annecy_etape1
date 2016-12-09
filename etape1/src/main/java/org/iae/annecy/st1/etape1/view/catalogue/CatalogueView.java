@@ -9,7 +9,7 @@ public class CatalogueView {
 	private Catalogue catalogue = new Catalogue();
 	
 	public CatalogueView(Catalogue moncatalogue){
-		this.setCatalogue(moncatalogue);
+		this.catalogue=moncatalogue;
 	}
 	
 	public Catalogue getCatalogue() {
@@ -25,7 +25,7 @@ public class CatalogueView {
 		String texte="";
 		int numero=0;
 		 for(Produit p : this.catalogue.getProduits()){
-			 texte +="numero = "+numero+" la réference du produit est :"+p.getRef()+
+			 texte +="numero du produit est = "+numero+" la réference du produit est :"+p.getRef()+
 						" le prix du produit : "+p.getPrix()+
 						" la description du produit :"+p.getDescription()+
 						" le nom du produit :"+p.getNom()+"\n";	

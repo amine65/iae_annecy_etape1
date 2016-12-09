@@ -50,9 +50,9 @@ public class Panier {
 	public void listerpanier(){
 		
 		if(this.getValidercommande() == false){
-			ConsoleHelper.display("votre panier n\'est pas valider");
+			ConsoleHelper.display("votre panier n\'est pas valider il contient les produit suivant :");
 		}else{
-			ConsoleHelper.display("votre panier est valider");
+			ConsoleHelper.display("votre panier est valider il contient les produit suivant :");
 		}
 		
 		for(Produit produit : this.getProduits()){
