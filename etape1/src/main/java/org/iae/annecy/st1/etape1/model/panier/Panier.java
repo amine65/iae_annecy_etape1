@@ -6,7 +6,7 @@ import org.iae.annecy.st1.etape1.model.client.Client;
 import org.iae.annecy.st1.etape1.model.produit.Produit;
 import org.iae.annecy.st1.tools.ConsoleHelper;
 
-public class Panier {
+public class Panier implements java.io.Serializable{
 	private ArrayList<Produit> produits = new ArrayList<Produit>();
 	private Boolean validercommande=false;
 	private Client client;
@@ -62,19 +62,34 @@ public class Panier {
 	}
 	
 	public void prixpanier(){
-		int totale =0;
+		float totale =0;
 		int numero=0;
-		for(Produit produit : this.getProduits()){
-			totale = produit.getPrix()+totale;
-			numero+=numero;
-			ConsoleHelper.display("le produit numero: "+ numero + "nommer :"+produit.getNom()+"à le prix :"+produit.getPrix());
-		}
+		float prixpromo=0;
 		if(this.client != null){
-			ConsoleHelper.display("votre code de promotion est :"+this.client.getcodepromo());
-			ConsoleHelper.display("le prix totale des produit commandé est :"+totale);
-			ConsoleHelper.display("le prix totale avec votre code de promotion est :");
+			if(this.getProduits()!=null){
+				for(Produit produit : this.getProduits()){
+					totale = produit.getPrix()+totale;
+					numero+=numero;
+					ConsoleHelper.display("le produit numero: "+ numero + "nommer :"+produit.getNom()+"à le prix :"+produit.getPrix());
+				}
+			
+				ConsoleHelper.display("votre code de promotion est :"+this.client.getcodepromo()+"%");
+				ConsoleHelper.display("le prix totale des produit commandé est : "+totale);
+				if(this.getClient().getcodepromo()==10){
+					prixpromo=totale/10;
+				}else if(this.getClient().getcodepromo()==25){
+					prixpromo=totale/4;
+				}else if(this.getClient().getcodepromo()==50){
+					prixpromo=totale/2;
+				}
+					
+				ConsoleHelper.display("le prix totale avec votre code de promotion est : "+ prixpromo);
+			}else {
+				ConsoleHelper.display("votre panier est vide !!");
+			}
 			
 		}
+		
 	}
 
 }

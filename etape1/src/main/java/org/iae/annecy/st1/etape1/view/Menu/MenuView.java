@@ -254,9 +254,15 @@ public class MenuView {
 						ConsoleHelper.display("voulez-vous modifier le code promotionnel ? 1:oui 2:non");
 						choixpromo =this.saisie.nextInt();
 						if(choixpromo == 1){
-							ConsoleHelper.display("entrer le nouveau code promotionnel du client :");
+							ConsoleHelper.display("choisissez le code promotionnel du client  =  1=>10%  2:=>25%  3=>50%");
 							codepromo =this.saisie.nextInt();
-							clienttrouver.setcodepromo(codepromo);
+							if(codepromo==1){
+								clienttrouver.setcodepromo(10);
+							}else if(codepromo == 2){
+								clienttrouver.setcodepromo(25);
+							}else if(codepromo == 3){
+								clienttrouver.setcodepromo(50);
+							}
 						}
 					}	
 					//clientcontroller.ajouterClient(clientnouveau);
@@ -285,27 +291,39 @@ public class MenuView {
 					Client clientnouveau= new Client();
 					ConsoleHelper.display("entrer le numero du client :");
 					numero =this.saisie.nextInt();
-					clientnouveau.setNumero(numero);
+					Client clienttrouver = clientcontroller.recherch(numero);
+					if(clienttrouver == null){
+						clientnouveau.setNumero(numero);
 					
-					ConsoleHelper.display("entrer le nom du client :");
-					nom =this.saisie.next();
-					clientnouveau.setNom(nom);
+						ConsoleHelper.display("entrer le nom du client :");
+						nom =this.saisie.next();
+						clientnouveau.setNom(nom);
 					
-					ConsoleHelper.display("entrer le prenom du client :");
-					prenom =this.saisie.next();
-					clientnouveau.setPrenom(prenom);
+						ConsoleHelper.display("entrer le prenom du client :");
+						prenom =this.saisie.next();
+						clientnouveau.setPrenom(prenom);
 					
-					ConsoleHelper.display("voulez-vous lui attribuer un code promotionnel ? 1:oui 2:non");
-					choixpromo =this.saisie.nextInt();
-					if(choixpromo == 1){
-						ConsoleHelper.display("entrer le code promotionnel du client :");
-						codepromo =this.saisie.nextInt();
-						clientnouveau.setcodepromo(codepromo);
+						ConsoleHelper.display("voulez-vous lui attribuer un code promotionnel ? 1:oui 2:non");
+						choixpromo =this.saisie.nextInt();
+						if(choixpromo == 1){
+							ConsoleHelper.display("choisissez le code promotionnel du client  =  1=>10%  2:=>25%  3=>50%");
+							codepromo =this.saisie.nextInt();
+							if(codepromo==1){
+								clientnouveau.setcodepromo(10);
+							}else if(codepromo == 2){
+								clientnouveau.setcodepromo(25);
+							}else if(codepromo == 3){
+								clientnouveau.setcodepromo(50);
+							}
+						
+						}
+						clientcontroller.ajouterClient(clientnouveau);
+						ConsoleHelper.display("Client ajouter !!!");
+					}else{
+						ConsoleHelper.display("Le numero de client existe deja !!");
 					}
-					clientcontroller.ajouterClient(clientnouveau);
-					ConsoleHelper.display("Client ajouter !!!");
 					choixgeneral = this.menuclientgeneral();
-			}
+					}
 		}
 		
 		try {

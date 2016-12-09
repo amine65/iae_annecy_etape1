@@ -26,7 +26,7 @@ public class ClientController implements java.io.Serializable {
 	public String get(){
 		String texte="";
 		for(Client monclient : this.client){
-			texte = monclient.afficher()+"\n";
+			texte += monclient.afficher()+"\n";
 		}
 		return texte;
 	}

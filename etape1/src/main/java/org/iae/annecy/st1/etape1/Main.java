@@ -118,7 +118,7 @@ public class Main {
 		
 		
 		
-		choixmenu=menu.menugeneral();
+	choixmenu=menu.menugeneral();
 	while(choixmenu<5){	
 		
 		switch(choixmenu){
