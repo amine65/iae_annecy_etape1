@@ -54,7 +54,7 @@ public class MenuView {
 		int choix;
 		this.saisie.reset();
 		ConsoleHelper.display("######### Menu Vendeur #########");
-		ConsoleHelper.display("1-indiquer qu'un client a acheté un produit  \t 2-visualiser les produits achetés par un client \t 3-Quitter");
+		ConsoleHelper.display("1-visualiser les produits achetés par un client \t 2-Quitter");
 		choix=this.saisie.nextInt();;
 		return choix;
 	}
@@ -416,12 +416,8 @@ public class MenuView {
 		// TODO Auto-generated method stub
 		int choixgeneral;
 		choixgeneral = this.menuvendeur();
-		while(choixgeneral<3){
+		while(choixgeneral<2){
 			if(choixgeneral == 1){
-				/*ConsoleHelper.display("Entre votre numero client pour acceder à votre compte : ");
-				int numero = saisie.nextInt();*/
-				choixgeneral = this.menuvendeur();
-			}else if(choixgeneral == 2){
 				
 				commande.afficherparclient();
 				choixgeneral = this.menuvendeur();
