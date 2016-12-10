@@ -13,6 +13,8 @@ public class Produit implements java.io.Serializable {
 	private int prix;
 	private String nom;
 	
+	private int quantiteproduit=0;
+	
 	public Produit(){
 		
 	}
@@ -25,6 +27,12 @@ public class Produit implements java.io.Serializable {
 		this.nom=nom;
 	}
 	
+	public int getQuantiteproduit() {
+		return quantiteproduit;
+	}
+	public void setQuantiteproduit(int quantiteproduit) {
+		this.quantiteproduit = quantiteproduit;
+	}
 	public String getDescriptionlong() {
 		return descriptionlong;
 	}

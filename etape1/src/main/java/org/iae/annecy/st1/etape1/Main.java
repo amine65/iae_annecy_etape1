@@ -102,7 +102,6 @@ public class Main {
 	         in.close();
 	         fileIn.close();
 		}catch(FileNotFoundException f){
-			ConsoleHelper.display("votre catalogue est vide pensez a le remplir !! \n");
 			catalogue.getProduits().add(produit1);
 			catalogue.getProduits().add(produit2);
 			catalogueController.setMoncatatalogue(catalogue);
@@ -133,6 +132,9 @@ public class Main {
 		case 3:
 			ConsoleHelper.display("Entre votre numero client pour acceder à votre compte : ");
 			int numero = saisie.nextInt();
+			if(commande.getClients().isEmpty()){
+				commande.ajouterclient(monpanier.getClient());
+			}
 			
 			client = commande.recherch(numero);
 			if(client!=null){
@@ -148,6 +150,11 @@ public class Main {
 			break;
 		case 4:
 			//commande.recherch(client.getNumero());
+			if(commande.getClients().isEmpty()){
+				
+				commande.setClients(clientcatalogue.getClient());
+			}
+			
 			menu.menuvendeurmagasin(commande);
 			choixmenu=menu.menugeneral();
 			break;
@@ -155,5 +162,6 @@ public class Main {
 	}
 
 	}
+	
 
 }

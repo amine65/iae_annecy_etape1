@@ -101,10 +101,10 @@ public class MenuView {
 		int choixmenu;
 		
 		ConsoleHelper.display("choisiez votre degreé de responsabilité : ");
-		ConsoleHelper.display("1 : Responsable produit");
-		ConsoleHelper.display("2 : Responsable clientèle");
-		ConsoleHelper.display("3 : Client");
-		ConsoleHelper.display("4 : Vendeur dans le magasin");
+		ConsoleHelper.display("1 : En tant que : Responsable produit");
+		ConsoleHelper.display("2 : En tant que : Responsable clientèle");
+		ConsoleHelper.display("3 : En tant que : Client");
+		ConsoleHelper.display("4 : En tant que : Vendeur dans le magasin");
 		ConsoleHelper.display("ou 5 : Quitter");
 		choixmenu = this.saisie.nextInt();
 		
@@ -357,20 +357,28 @@ public class MenuView {
 				monproduit=cataloguecontroller.recherch(reference);
 				
 				if(monproduit != null){
-					ConsoleHelper.display("le produit choisis est : ");
-					monproduit.afficher();
-					ConsoleHelper.display("voulez-vous l\'ajouter à votre panier ? 1:oui 2:non");
-					confirmation=this.saisie.nextInt();
-					if(confirmation==1){
-						monpanier.ajouterProduit(monproduit);
-						
-						clients.ajouterproduit(monproduit);
-						
-						ConsoleHelper.display("produit ajouter avec succès");
+					if(clients.recherch(reference) == null){
+						ConsoleHelper.display("le produit choisis est : ");
+						monproduit.afficher();
+						ConsoleHelper.display("entre la quantite du produit à ajouter dans votre panier : ");
+						int nombre = this.saisie.nextInt();
+						monproduit.setQuantiteproduit(nombre);
+						ConsoleHelper.display("voulez-vous l'ajouter à votre panier ? 1:oui 2:non");
+						confirmation=this.saisie.nextInt();
+						if(confirmation==1){
+							monpanier.ajouterProduit(monproduit);
+							
+							clients.ajouterproduit(monproduit);
+							
+							ConsoleHelper.display("produit ajouter avec succès");
+						}
+					}else{
+						ConsoleHelper.display("le produit demander n\'existe pas dans votre panier !!!!");
 					}
 				}else{
 					ConsoleHelper.display("le produit demander n\'existe pas !!");
 				}
+					
 				choixgeneral = this.menuclientnative();
 			}else if(choixgeneral == 2){
 				monpanier.prixpanier();

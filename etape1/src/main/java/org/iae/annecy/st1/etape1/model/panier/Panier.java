@@ -7,6 +7,7 @@ import org.iae.annecy.st1.etape1.model.produit.Produit;
 import org.iae.annecy.st1.tools.ConsoleHelper;
 
 public class Panier implements java.io.Serializable{
+
 	private ArrayList<Produit> produits = new ArrayList<Produit>();
 	private Boolean validercommande=false;
 	private Client client;
@@ -63,27 +64,27 @@ public class Panier implements java.io.Serializable{
 	
 	public void prixpanier(){
 		float totale =0;
-		int numero=0;
 		float prixpromo=0;
 		if(this.client != null){
 			if(this.getProduits()!=null){
 				for(Produit produit : this.getProduits()){
-					totale = produit.getPrix()+totale;
-					numero+=numero;
-					ConsoleHelper.display("le produit numero: "+ numero + "nommer :"+produit.getNom()+"à le prix :"+produit.getPrix());
+					totale = (produit.getPrix()*produit.getQuantiteproduit())+totale;
+					ConsoleHelper.display("le produit nommer :"+produit.getNom()+" à le prix unitaire :"+produit.getPrix());
+					ConsoleHelper.display("Quantite : "+produit.getQuantiteproduit());
+					ConsoleHelper.display("Le prix globale quantite * prix unitaire : " + produit.getQuantiteproduit()*produit.getPrix());
+					ConsoleHelper.display("############################");
 				}
-			
-				ConsoleHelper.display("votre code de promotion est :"+this.client.getcodepromo()+"%");
+				ConsoleHelper.display("La Valeur votre code de promotion est :"+this.client.getcodepromo()+"%");
 				ConsoleHelper.display("le prix totale des produit commandé est : "+totale);
 				if(this.getClient().getcodepromo()==10){
-					prixpromo=totale/10;
+					prixpromo=totale - totale/10;
 				}else if(this.getClient().getcodepromo()==25){
-					prixpromo=totale/4;
+					prixpromo=totale - totale/4;
 				}else if(this.getClient().getcodepromo()==50){
-					prixpromo=totale/2;
+					prixpromo=totale - totale/2;
 				}
 					
-				ConsoleHelper.display("le prix totale avec votre code de promotion est : "+ prixpromo);
+				ConsoleHelper.display("le prix à payer avec votre code de promotion est : "+ prixpromo);
 			}else {
 				ConsoleHelper.display("votre panier est vide !!");
 			}
