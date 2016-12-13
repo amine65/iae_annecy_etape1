@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.Scanner;
 import org.iae.annecy.st1.tools.ConsoleHelper;
-import org.iae.annecy.st1.etape1.controller.ClientController;
 import org.iae.annecy.st1.etape1.controller.catalogue.CatalogueController;
+import org.iae.annecy.st1.etape1.controller.listclient.ClientController;
 import org.iae.annecy.st1.etape1.model.client.Client;
 import org.iae.annecy.st1.etape1.model.commande.Commande;
 import org.iae.annecy.st1.etape1.model.panier.Panier;
@@ -57,7 +57,7 @@ public class MenuView {
 		int choix;
 		this.saisie.reset();
 		ConsoleHelper.display("######### Menu Vendeur #########");
-		ConsoleHelper.display("1-visualiser les produits achetés par un client \t 2-Quitter");
+		ConsoleHelper.display("1-Visualiser les produits achetés par un client \t 2-Retour menu principal");
 		choix = this.saisie.nextInt();
 		;
 		return choix;
@@ -78,8 +78,6 @@ public class MenuView {
 	public int menuattribut(Produit p) {
 		int choix;
 
-		// ConsoleHelper.display("1 : la reference du produit choisi est :
-		// "+p.getRef());
 		ConsoleHelper.display("1 : le nom du produit choisi est : " + p.getNom());
 		ConsoleHelper.display("2 : la description du produit choisi est : " + p.getDescription());
 		ConsoleHelper.display("3 : le prix du produit choisi est : " + p.getPrix());

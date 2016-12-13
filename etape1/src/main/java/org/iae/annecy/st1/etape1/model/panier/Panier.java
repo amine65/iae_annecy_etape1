@@ -66,7 +66,7 @@ public class Panier implements java.io.Serializable {
 		float totale = 0;
 		float prixpromo = 0;
 		if (this.client != null) {
-			if (this.getProduits() != null) {
+			if (!this.getProduits().isEmpty()) {
 				for (Produit produit : this.getProduits()) {
 					totale = (produit.getPrix() * produit.getQuantiteproduit()) + totale;
 					ConsoleHelper.display(

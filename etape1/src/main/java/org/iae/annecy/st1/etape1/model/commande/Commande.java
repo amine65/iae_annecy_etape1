@@ -47,10 +47,13 @@ public class Commande {
 
 	public void afficherparclient() {
 		for (Client client : this.getClients()) {
-			if (client.getProduit() != null) {
+			if (!client.getProduit().isEmpty()) {
 				ConsoleHelper.display("le client: " + client.getNom() + " numero : " + client.getNumero()
 						+ " à acheter les produit suivants : ");
 				client.afficherproduits();
+			}else {
+				ConsoleHelper.display(" Salut client: " + client.getNom() + " numero : " + client.getNumero());
+				ConsoleHelper.display(" vous n\'avez acheté aucun produit pour le moment ");
 			}
 		}
 

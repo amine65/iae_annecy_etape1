@@ -6,20 +6,18 @@ package org.iae.annecy.st1.etape1;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
 import org.iae.annecy.st1.etape1.controller.catalogue.CatalogueController;
+import org.iae.annecy.st1.etape1.controller.listclient.ClientController;
 import org.iae.annecy.st1.etape1.model.catalogue.Catalogue;
 import org.iae.annecy.st1.etape1.model.client.Client;
 import org.iae.annecy.st1.etape1.model.commande.Commande;
 import org.iae.annecy.st1.etape1.model.panier.Panier;
 import org.iae.annecy.st1.etape1.model.produit.Produit;
 import org.iae.annecy.st1.etape1.view.Menu.MenuView;
-import org.iae.annecy.st1.etape1.controller.ClientController;
 import org.iae.annecy.st1.tools.ConsoleHelper;
 
 /**
