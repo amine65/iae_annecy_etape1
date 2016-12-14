@@ -35,8 +35,8 @@ public class Main {
 	 */
 	public static void main(final String[] args) {
 
-		Produit produit1 = new Produit("ref1", "description1", "description long", 15, "prod1");
-		Produit produit2 = new Produit("ref2", "description2", "description long", 30, "prod2");
+		Produit produit1 = new Produit("ref1", "description1", "description long 1", 15, "prod1");
+		Produit produit2 = new Produit("ref2", "description2", "description long 2", 30, "prod2");
 
 		Catalogue catalogue = new Catalogue();
 
@@ -55,23 +55,6 @@ public class Main {
 		MenuView menu = new MenuView();
 		int choixmenu;
 
-		// ############################### Deserialisation Panier############################################
-		try {
-			FileInputStream fileIn = new FileInputStream("panier.ser");
-			ObjectInputStream in = new ObjectInputStream(fileIn);
-			monpanier = (Panier) in.readObject();
-			in.close();
-			fileIn.close();
-		} catch (FileNotFoundException f) {
-
-		} catch (IOException i) {
-			ConsoleHelper.display("un erreur est survenu lors de la lecture du le fichier : " + i);
-
-		} catch (ClassNotFoundException e) {
-			ConsoleHelper.display("la classe Panier n\'existe pas !!");
-			e.printStackTrace();
-			return;
-		}
 		// ############################### Deserialisation Clients############################################
 		try {
 			FileInputStream fileIn = new FileInputStream("client.ser");
@@ -127,20 +110,26 @@ public class Main {
 			case 3:
 				ConsoleHelper.display("Entre votre numero client pour acceder à votre compte : ");
 				int numero = saisie.nextInt();
-				if (commande.getClients().isEmpty()) {
-					commande.ajouterclient(monpanier.getClient());
-				}
-				client = commande.recherch(numero);
+				
+				client = clientcatalogue.recherch(numero);
 				if (client != null) {
 					client = menu.menuclient(catalogueController, monpanier, client);
 				} else {
 					ConsoleHelper.display("le numero saisie ne correspond à aucun client !!");
 				}
 
-				commande.ajouterclient(client);
 				choixmenu = menu.menugeneral();
+				
+				clientcatalogue.metreajour(client);
+				
+				commande.getClients().clear();
+				
+				commande.setClients(clientcatalogue.getClient());
+
+				
 				break;
 			case 4:
+				
 				if (commande.getClients().isEmpty()) {
 					commande.setClients(clientcatalogue.getClient());
 				}

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.iae.annecy.st1.etape1.model.client.Client;
+import org.iae.annecy.st1.etape1.model.produit.Produit;
+import org.iae.annecy.st1.tools.ConsoleHelper;
 
 public class ClientController implements java.io.Serializable {
 	private ArrayList<Client> client = new ArrayList<Client>();
@@ -25,8 +27,12 @@ public class ClientController implements java.io.Serializable {
 	
 	public String get(){
 		String texte="";
-		for(Client monclient : this.client){
-			texte += monclient.afficher()+"\n";
+		if(!this.getClient().isEmpty()){
+			for(Client monclient : this.client){
+				texte += monclient.afficher()+"\n";
+			}
+		}else{
+			ConsoleHelper.display("le repertoire des clients est vide");
 		}
 		return texte;
 	}
@@ -44,6 +50,17 @@ public class ClientController implements java.io.Serializable {
 			}
 		}
 		return null;
+	}
+	
+	public void metreajour(Client monclient){
+		int i=0;
+		while(this.client.iterator().hasNext()){
+			Client landaclient=this.client.iterator().next();
+			if(monclient.getNumero() == landaclient.getNumero()){
+				this.client.get(i).setProduit(monclient.getProduit());
+			}
+			i++;
+		}
 	}
 	
 

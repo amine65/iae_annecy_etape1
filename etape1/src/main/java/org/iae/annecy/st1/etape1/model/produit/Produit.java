@@ -76,9 +76,9 @@ public class Produit implements java.io.Serializable {
 	}
 
 	public void afficher() {
-		ConsoleHelper.display("la réference du produit est :" + this.getRef() + " le nom du produit : " + this.getNom()
-				+ " le prix du produit : " + this.getPrix() + " la description du produit :" + this.getDescription()
-				+ " la description long du produit :" + this.getDescriptionlong());
+		ConsoleHelper.display("la réference du produit est :" + this.getRef() + "\n le nom du produit : " + this.getNom()
+				+ "\n le prix du produit : " + this.getPrix() + "\n la description du produit :" + this.getDescription()
+				+ "\n la description long du produit :" + this.getDescriptionlong());
 	}
 
 }

@@ -24,7 +24,7 @@ public class MenuView {
 
 		int choix;
 
-		ConsoleHelper.display("Quel produit voulez-vous choisir ?");
+		ConsoleHelper.display("Quel produit voulez-vous choisir ? (entrer le numero du produit)");
 
 		choix = this.saisie.nextInt();
 		return choix;
@@ -35,8 +35,8 @@ public class MenuView {
 		this.saisie.reset();
 		ConsoleHelper.display("######### Menu Responsable produit #########");
 		ConsoleHelper.display(
-				"1-Afficher les produit au catalogue  \t 2-modifier un produit dans le catalogue \t 3-Recherche dans le catalogue \t 4-Ajouter produit dans le catalogue \n 5-Supprimer du catalogue "
-						+ "\t 6-Quitter");
+				"1-Afficher les produit au catalogue  \t 2-modifier un produit dans le catalogue \t 3-Recherche dans le catalogue \n 4-Ajouter produit dans le catalogue \t 5-Supprimer du catalogue "
+						+ "\t 6-Retour menu principal");
 		choix = this.saisie.nextInt();
 		;
 		return choix;
@@ -47,9 +47,9 @@ public class MenuView {
 		this.saisie.reset();
 		ConsoleHelper.display("######### Menu Client #########");
 		ConsoleHelper.display(
-				"1-ajouter un produit à votre panier  \t 2-voir le prix de mon panier \t 3-valider votre commande \n 4-voir votre panier \t 5-Quitter");
+				"1-ajouter un produit à votre panier  \t 2-voir le prix de mon panier \n 3-valider votre commande \t 4-voir votre panier \t 5-Retour menu principal");
 		choix = this.saisie.nextInt();
-		;
+		
 		return choix;
 	}
 
@@ -68,8 +68,8 @@ public class MenuView {
 		this.saisie.reset();
 		ConsoleHelper.display("######### Menu Responsable clientèle #########");
 		ConsoleHelper.display(
-				"1-Afficher les clients  \t 2-modifier un client \t 3-Recherche un client \t 4-Ajouter un client "
-						+ "\t 5-Quitter");
+				"1-Afficher les clients  \t 2-modifier un client \t 3-Recherche un client \n 4-Ajouter un client "
+						+ "\t 5-Retour menu principal");
 		choix = this.saisie.nextInt();
 		;
 		return choix;
@@ -80,8 +80,8 @@ public class MenuView {
 
 		ConsoleHelper.display("1 : le nom du produit choisi est : " + p.getNom());
 		ConsoleHelper.display("2 : la description du produit choisi est : " + p.getDescription());
-		ConsoleHelper.display("3 : le prix du produit choisi est : " + p.getPrix());
-		ConsoleHelper.display("4 : le description long du produit choisi est : " + p.getPrix());
+		ConsoleHelper.display("3 : le description long du produit choisi est : " + p.getDescriptionlong());
+		ConsoleHelper.display("4 : le prix du produit choisi est : " + p.getPrix());
 
 		ConsoleHelper.display("le quelle voulez-vous medifier ?");
 		choix = this.saisie.nextInt();
@@ -145,10 +145,15 @@ public class MenuView {
 					cataloguecontroller.getMoncatatalogue().getProduits().get(choixproduit - 1).setNom(nom);
 				} else if (choixattribut == 2) {
 					ConsoleHelper.display("entrer la nouvelle description :");
-					description = this.saisie.nextLine();
+					description = this.saisie.next();
 					cataloguecontroller.getMoncatatalogue().getProduits().get(choixproduit - 1)
-							.setDescription(description);
+					.setDescription(description);
 				} else if (choixattribut == 3) {
+					ConsoleHelper.display("entrer la nouvelle description longue :");
+					descriptionlong = this.saisie.next();
+					cataloguecontroller.getMoncatatalogue().getProduits().get(choixproduit - 1)
+					.setDescriptionlong(descriptionlong);	
+				} else if (choixattribut == 4) {
 					ConsoleHelper.display("entrer le nouveau prix :");
 					prix = this.saisie.nextInt();
 					cataloguecontroller.getMoncatatalogue().getProduits().get(choixproduit - 1).setPrix(prix);
@@ -162,8 +167,8 @@ public class MenuView {
 				prodtrouver = cataloguecontroller.recherch(reference);
 				if (prodtrouver != null) {
 					ConsoleHelper.display("produit trouver \n la réference du produit est :" + prodtrouver.getRef()
-							+ " \n le prix du produit : " + prodtrouver.getPrix() + " \n la description du produit :"
-							+ prodtrouver.getDescription());
+					+ " \n le prix du produit : " + prodtrouver.getPrix() + " \n la description du produit :"
+					+ prodtrouver.getDescription());
 				} else {
 					ConsoleHelper.display("le produit n\'existe pas");
 				}
@@ -188,7 +193,7 @@ public class MenuView {
 						descriptionlong = this.saisie.next();
 
 						cataloguecontroller
-								.ajouterproduit(new Produit(reference, description, descriptionlong, prix, nom));
+						.ajouterproduit(new Produit(reference, description, descriptionlong, prix, nom));
 					} else {
 						ConsoleHelper.display("vous ne pouvez pas ajouter un prix negatif !!! :");
 					}
@@ -239,46 +244,51 @@ public class MenuView {
 				choixgeneral = this.menuclientgeneral();
 
 			} else if (choixgeneral == 2) {
-				ConsoleHelper.display(clientcontroller.get());
-				ConsoleHelper.display("Entre le numero du client que vous chercher : ");
-				numero = this.saisie.nextInt();
+				//ConsoleHelper.display(clientcontroller.get());
+				if(!clientcontroller.get().matches("")){
 
-				Client clienttrouver = clientcontroller.recherch(numero);
-				if (clienttrouver != null) {
-					choixattribut = menuattributclient(clienttrouver);
-					if (choixattribut == 1) {
-						ConsoleHelper.display("entrer le nouveau numero du client :");
-						numero = this.saisie.nextInt();
-						clienttrouver.setNumero(numero);
-					} else if (choixattribut == 2) {
-						ConsoleHelper.display("entrer le nouveau nom du client :");
-						nom = this.saisie.next();
-						clienttrouver.setNom(nom);
-					} else if (choixattribut == 3) {
-						ConsoleHelper.display("entrer le nouveau prenom du client :");
-						prenom = this.saisie.next();
-						clienttrouver.setPrenom(prenom);
-					} else if (choixattribut == 4) {
-						ConsoleHelper.display("voulez-vous modifier le code promotionnel ? 1:oui 2:non");
-						choixpromo = this.saisie.nextInt();
-						if (choixpromo == 1) {
-							ConsoleHelper
-									.display("choisissez le code promotionnel du client  =  1=>10%  2:=>25%  3=>50%");
-							codepromo = this.saisie.nextInt();
-							if (codepromo == 1) {
-								clienttrouver.setcodepromo(10);
-							} else if (codepromo == 2) {
-								clienttrouver.setcodepromo(25);
-							} else if (codepromo == 3) {
-								clienttrouver.setcodepromo(50);
+					ConsoleHelper.display("Entre le numero du client que vous chercher : ");
+					numero = this.saisie.nextInt();
+
+					Client clienttrouver = clientcontroller.recherch(numero);
+					if (clienttrouver != null) {
+						choixattribut = menuattributclient(clienttrouver);
+						if (choixattribut == 1) {
+							ConsoleHelper.display("entrer le nouveau numero du client :");
+							numero = this.saisie.nextInt();
+							clienttrouver.setNumero(numero);
+						} else if (choixattribut == 2) {
+							ConsoleHelper.display("entrer le nouveau nom du client :");
+							nom = this.saisie.next();
+							clienttrouver.setNom(nom);
+						} else if (choixattribut == 3) {
+							ConsoleHelper.display("entrer le nouveau prenom du client :");
+							prenom = this.saisie.next();
+							clienttrouver.setPrenom(prenom);
+						} else if (choixattribut == 4) {
+							ConsoleHelper.display("voulez-vous modifier le code promotionnel ? 1:oui 2:non");
+							choixpromo = this.saisie.nextInt();
+							if (choixpromo == 1) {
+								ConsoleHelper
+								.display("choisissez le code promotionnel du client  =  1=>10%  2:=>25%  3=>50%");
+								codepromo = this.saisie.nextInt();
+								if (codepromo == 1) {
+									clienttrouver.setcodepromo(10);
+								} else if (codepromo == 2) {
+									clienttrouver.setcodepromo(25);
+								} else if (codepromo == 3) {
+									clienttrouver.setcodepromo(50);
+								}
 							}
 						}
+						// clientcontroller.ajouterClient(clientnouveau);
+						ConsoleHelper.display("Client modifier !!!");
+					} else {
+						ConsoleHelper.display("Client existe pas !!!");
 					}
-					// clientcontroller.ajouterClient(clientnouveau);
-					ConsoleHelper.display("Client modifier !!!");
-				} else {
-					ConsoleHelper.display("Client existe pas !!!");
+
 				}
+
 				choixgeneral = this.menuclientgeneral();
 
 			} else if (choixgeneral == 3) {
@@ -288,9 +298,9 @@ public class MenuView {
 				Client clienttrouve = clientcontroller.recherch(numero);
 				if (clienttrouve != null) {
 					ConsoleHelper.display("Client trouver \n le numero du client est :" + clienttrouve.getNumero()
-							+ " \n Le nom du client est  : " + clienttrouve.getNom() + " \n Le prenom du client est  :"
-							+ clienttrouve.getPrenom() + " \n Son numero promotionnel est  : "
-							+ clienttrouve.getcodepromo());
+					+ " \n Le nom du client est  : " + clienttrouve.getNom() + " \n Le prenom du client est  :"
+					+ clienttrouve.getPrenom() + " \n Son numero promotionnel est  : "
+					+ clienttrouve.getcodepromo());
 				} else {
 					ConsoleHelper.display("le client demander n\'existe pas");
 				}
@@ -357,7 +367,7 @@ public class MenuView {
 		Client clients = new Client();
 		monpanier.setClient(client);
 		choixgeneral = this.menuclientnative();
-		while (choixgeneral < 5) {
+		while (choixgeneral != 5) {
 			if (choixgeneral == 1) {
 				ConsoleHelper.display("les produit existant dans le catalogue sont : ");
 				ConsoleHelper.display(cataloguecontroller.get());
@@ -411,18 +421,10 @@ public class MenuView {
 			} else if (choixgeneral == 4) {
 				monpanier.listerpanier();
 				choixgeneral = this.menuclientnative();
+			}else {
+				ConsoleHelper.display("entrer inconnu !!");
+				choixgeneral = this.menuclientnative();
 			}
-		}
-
-		try {
-			FileOutputStream fileOut = new FileOutputStream("panier.ser");
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(monpanier);
-			out.close();
-			fileOut.close();
-			ConsoleHelper.display("panier sauvrgarder in panier.se");
-		} catch (IOException i) {
-			ConsoleHelper.display("un erreur est survenu lors de l\'écréture dans le fichier : " + i);
 		}
 
 		return clients;
@@ -430,12 +432,10 @@ public class MenuView {
 	}
 
 	public void menuvendeurmagasin(Commande commande) {
-		// TODO Auto-generated method stub
 		int choixgeneral;
 		choixgeneral = this.menuvendeur();
 		while (choixgeneral < 2) {
 			if (choixgeneral == 1) {
-
 				commande.afficherparclient();
 				choixgeneral = this.menuvendeur();
 			}
