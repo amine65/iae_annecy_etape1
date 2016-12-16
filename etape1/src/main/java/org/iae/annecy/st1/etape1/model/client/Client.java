@@ -9,6 +9,10 @@ public class Client implements java.io.Serializable {
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = 5275956156462204334L;
+	/**
+	 * 
+	 */
 	private String nom;
 	private String prenom;
 	private int numero;

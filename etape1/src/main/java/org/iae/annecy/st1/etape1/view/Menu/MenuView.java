@@ -38,7 +38,6 @@ public class MenuView {
 				"1-Afficher les produit au catalogue  \t 2-modifier un produit dans le catalogue \t 3-Recherche dans le catalogue \n 4-Ajouter produit dans le catalogue \t 5-Supprimer du catalogue "
 						+ "\t 6-Retour menu principal");
 		choix = this.saisie.nextInt();
-		;
 		return choix;
 	}
 
@@ -49,7 +48,7 @@ public class MenuView {
 		ConsoleHelper.display(
 				"1-ajouter un produit à votre panier  \t 2-voir le prix de mon panier \n 3-valider votre commande \t 4-voir votre panier \t 5-Retour menu principal");
 		choix = this.saisie.nextInt();
-		
+
 		return choix;
 	}
 
@@ -59,7 +58,6 @@ public class MenuView {
 		ConsoleHelper.display("######### Menu Vendeur #########");
 		ConsoleHelper.display("1-Visualiser les produits achetés par un client \t 2-Retour menu principal");
 		choix = this.saisie.nextInt();
-		;
 		return choix;
 	}
 
@@ -71,7 +69,6 @@ public class MenuView {
 				"1-Afficher les clients  \t 2-modifier un client \t 3-Recherche un client \n 4-Ajouter un client "
 						+ "\t 5-Retour menu principal");
 		choix = this.saisie.nextInt();
-		;
 		return choix;
 	}
 
@@ -83,7 +80,7 @@ public class MenuView {
 		ConsoleHelper.display("3 : le description long du produit choisi est : " + p.getDescriptionlong());
 		ConsoleHelper.display("4 : le prix du produit choisi est : " + p.getPrix());
 
-		ConsoleHelper.display("le quelle voulez-vous medifier ?");
+		ConsoleHelper.display("le quelle voulez-vous medifier ? (1, 2, 3, 4)");
 		choix = this.saisie.nextInt();
 		return choix;
 	}
@@ -105,7 +102,6 @@ public class MenuView {
 
 	public int menugeneral() {
 		int choixmenu;
-
 		ConsoleHelper.display("choisiez votre degreé de responsabilité : ");
 		ConsoleHelper.display("1 : En tant que : Responsable produit");
 		ConsoleHelper.display("2 : En tant que : Responsable clientèle");
@@ -292,17 +288,20 @@ public class MenuView {
 				choixgeneral = this.menuclientgeneral();
 
 			} else if (choixgeneral == 3) {
-				ConsoleHelper.display("Entre le numero du client que vous chercher : ");
-				numero = this.saisie.nextInt();
+				if(!clientcontroller.get().matches("")){
+					ConsoleHelper.display("Entre le numero du client que vous chercher : ");
+					numero = this.saisie.nextInt();
 
-				Client clienttrouve = clientcontroller.recherch(numero);
-				if (clienttrouve != null) {
-					ConsoleHelper.display("Client trouver \n le numero du client est :" + clienttrouve.getNumero()
-					+ " \n Le nom du client est  : " + clienttrouve.getNom() + " \n Le prenom du client est  :"
-					+ clienttrouve.getPrenom() + " \n Son numero promotionnel est  : "
-					+ clienttrouve.getcodepromo());
-				} else {
-					ConsoleHelper.display("le client demander n\'existe pas");
+					Client clienttrouve = clientcontroller.recherch(numero);
+					if (clienttrouve != null) {
+						ConsoleHelper.display("Client trouver \n le numero du client est :" + clienttrouve.getNumero()
+						+ " \n Le nom du client est  : " + clienttrouve.getNom() + " \n Le prenom du client est  :"
+						+ clienttrouve.getPrenom() + " \n Son numero promotionnel est  : "
+						+ clienttrouve.getcodepromo());
+					} else {
+						ConsoleHelper.display("le client demander n\'existe pas");
+					}
+
 				}
 				choixgeneral = this.menuclientgeneral();
 			} else if (choixgeneral == 4) {
@@ -388,11 +387,11 @@ public class MenuView {
 							monpanier.ajouterProduit(monproduit);
 
 							clients.ajouterproduit(monproduit);
-
+							monpanier.setValidercommande(false);
 							ConsoleHelper.display("produit ajouter avec succès");
 						}
 					} else {
-						ConsoleHelper.display("le produit demander n\'existe pas dans votre panier !!!!");
+						ConsoleHelper.display("le produit demander existe deja dans votre panier !!!!");
 					}
 				} else {
 					ConsoleHelper.display("le produit demander n\'existe pas !!");

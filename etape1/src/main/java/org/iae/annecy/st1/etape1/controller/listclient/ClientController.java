@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.iae.annecy.st1.etape1.model.client.Client;
-import org.iae.annecy.st1.etape1.model.produit.Produit;
 import org.iae.annecy.st1.tools.ConsoleHelper;
 
 public class ClientController implements java.io.Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7170397225018528367L;
 	private ArrayList<Client> client = new ArrayList<Client>();
 	
 	public ClientController(Client monclient){

@@ -8,6 +8,10 @@ import org.iae.annecy.st1.tools.ConsoleHelper;
 
 public class Panier implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -188121012329579457L;
 	private ArrayList<Produit> produits = new ArrayList<Produit>();
 	private Boolean validercommande = false;
 	private Client client;

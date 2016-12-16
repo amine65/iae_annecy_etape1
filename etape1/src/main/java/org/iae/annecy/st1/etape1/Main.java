@@ -94,9 +94,10 @@ public class Main {
 			e.printStackTrace();
 			return;
 		}
+		//#################Menu Generale########################
 
 		choixmenu = menu.menugeneral();
-		while (choixmenu < 5) {
+		while (choixmenu != 5) {
 
 			switch (choixmenu) {
 			case 1:
@@ -110,30 +111,35 @@ public class Main {
 			case 3:
 				ConsoleHelper.display("Entre votre numero client pour acceder à votre compte : ");
 				int numero = saisie.nextInt();
-				
+
 				client = clientcatalogue.recherch(numero);
 				if (client != null) {
 					client = menu.menuclient(catalogueController, monpanier, client);
 				} else {
 					ConsoleHelper.display("le numero saisie ne correspond à aucun client !!");
 				}
-
-				choixmenu = menu.menugeneral();
-				
 				clientcatalogue.metreajour(client);
-				
+
 				commande.getClients().clear();
-				
+
 				commande.setClients(clientcatalogue.getClient());
 
-				
+
+				choixmenu = menu.menugeneral();
 				break;
 			case 4:
-				
+
 				if (commande.getClients().isEmpty()) {
 					commande.setClients(clientcatalogue.getClient());
 				}
 
+				menu.menuvendeurmagasin(commande);
+				choixmenu = menu.menugeneral();
+				break;
+			case 5:
+				break;
+			default:
+				ConsoleHelper.display("Erreue de saisie ");
 				menu.menuvendeurmagasin(commande);
 				choixmenu = menu.menugeneral();
 				break;
