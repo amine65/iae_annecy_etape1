@@ -367,7 +367,8 @@ public class MenuView {
 		monpanier.setClient(client);
 		choixgeneral = this.menuclientnative();
 		while (choixgeneral != 5) {
-			if (choixgeneral == 1) {
+			switch(choixgeneral){
+			case 1:
 				ConsoleHelper.display("les produit existant dans le catalogue sont : ");
 				ConsoleHelper.display(cataloguecontroller.get());
 				ConsoleHelper.display("entre la reference du produit que vous-voulez ajoutre a votre panier :");
@@ -381,15 +382,13 @@ public class MenuView {
 						ConsoleHelper.display("entre la quantite du produit à ajouter dans votre panier : ");
 						int nombre = this.saisie.nextInt();
 						monproduit.setQuantiteproduit(nombre);
-						ConsoleHelper.display("voulez-vous l'ajouter à votre panier ? 1:oui 2:non");
-						confirmation = this.saisie.nextInt();
-						if (confirmation == 1) {
-							monpanier.ajouterProduit(monproduit);
 
-							clients.ajouterproduit(monproduit);
-							monpanier.setValidercommande(false);
-							ConsoleHelper.display("produit ajouter avec succès");
-						}
+						monpanier.ajouterProduit(monproduit);
+
+						clients.ajouterproduit(monproduit);
+						monpanier.setValidercommande(false);
+						ConsoleHelper.display("produit ajouter avec succès");
+
 					} else {
 						ConsoleHelper.display("le produit demander existe deja dans votre panier !!!!");
 					}
@@ -398,10 +397,12 @@ public class MenuView {
 				}
 
 				choixgeneral = this.menuclientnative();
-			} else if (choixgeneral == 2) {
+				break;
+			case 2:
 				monpanier.prixpanier();
 				choixgeneral = this.menuclientnative();
-			} else if (choixgeneral == 3) {
+				break;
+			case 3:
 				monpanier.listerpanier();
 				if (monpanier.getValidercommande() == false) {
 
@@ -417,12 +418,17 @@ public class MenuView {
 				}
 
 				choixgeneral = this.menuclientnative();
-			} else if (choixgeneral == 4) {
+				break;
+			case 4:
 				monpanier.listerpanier();
 				choixgeneral = this.menuclientnative();
-			}else {
-				ConsoleHelper.display("entrer inconnu !!");
+				break;
+			case 5:
+				break;
+			default :
+				ConsoleHelper.display("erreur de saisie ");
 				choixgeneral = this.menuclientnative();
+				break;
 			}
 		}
 

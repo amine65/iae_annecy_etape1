@@ -18,7 +18,12 @@ public class Commande {
 	}
 
 	public void ajouterclient(Client client) {
-		this.getClients().add(client);
+		if(this.recherch(client.getNumero()) == null){
+			this.getClients().add(client);
+		}else{
+			this.recherchclient(client.getNumero());
+		}
+		
 	}
 
 	public Client recherch(int id) {
@@ -51,9 +56,11 @@ public class Commande {
 				ConsoleHelper.display("le client: " + client.getNom() + " numero : " + client.getNumero()
 						+ " à acheter les produit suivants : ");
 				client.afficherproduits();
+				ConsoleHelper.display("");
 			}else {
 				ConsoleHelper.display(" Salut client: " + client.getNom() + " numero : " + client.getNumero());
 				ConsoleHelper.display(" vous n\'avez acheté aucun produit pour le moment ");
+				ConsoleHelper.display("");
 			}
 		}
 

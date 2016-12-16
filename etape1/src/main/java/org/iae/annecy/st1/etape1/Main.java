@@ -48,9 +48,12 @@ public class Main {
 
 		Scanner saisie = new Scanner(System.in);
 
+		int numeroclient = 0;
+
 		CatalogueController catalogueController = new CatalogueController();
 
 		ClientController clientcatalogue = new ClientController();
+		Client monclient = new Client();
 
 		MenuView menu = new MenuView();
 		int choixmenu;
@@ -94,7 +97,7 @@ public class Main {
 			e.printStackTrace();
 			return;
 		}
-		//#################Menu Generale########################
+		// #################Menu Generale########################
 
 		choixmenu = menu.menugeneral();
 		while (choixmenu != 5) {
@@ -113,23 +116,25 @@ public class Main {
 				int numero = saisie.nextInt();
 
 				client = clientcatalogue.recherch(numero);
+				numeroclient= clientcatalogue.numeroclient(numero);
 				if (client != null) {
-					client = menu.menuclient(catalogueController, monpanier, client);
+					monclient = menu.menuclient(catalogueController, monpanier, client);
+					
+					clientcatalogue.getClient().get(numeroclient).setProduit(monclient.getProduit());
+					monclient=clientcatalogue.getClient().get(numeroclient);
+					commande.ajouterclient(monclient);
+					
 				} else {
 					ConsoleHelper.display("le numero saisie ne correspond à aucun client !!");
 				}
-				clientcatalogue.metreajour(client);
-
-				commande.getClients().clear();
-
-				commande.setClients(clientcatalogue.getClient());
+				
 
 
 				choixmenu = menu.menugeneral();
 				break;
 			case 4:
-
 				if (commande.getClients().isEmpty()) {
+
 					commande.setClients(clientcatalogue.getClient());
 				}
 
